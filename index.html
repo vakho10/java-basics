@@ -1,0 +1,14 @@
+--- 
+order: 1
+type: page
+layout: default 
+title: მთავარი გვერდი
+---
+<section>
+  {% for post in site.posts %}
+  <article>
+    <a href='{{ post.url | relative_url }}'>{{ post.title }}</a>
+    {{ post.excerpt }}
+  </article>
+  {% endfor %}
+</section>

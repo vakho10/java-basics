@@ -1,0 +1,14 @@
+.highlight {
+    border: 1px dashed #6699cc;
+    padding: 0;
+}
+
+.highlight>pre {
+    padding: 1rem;
+}
+
+/* Remove margin if code is the only element in card */
+.card > .highlight,
+.card-body > .highlight {
+    margin: 0;
+}

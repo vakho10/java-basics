@@ -1,0 +1,28 @@
+<header>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href='{{ "/" | relative_url }}'>{{ site.title }}</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    {% assign orderedPages = (site.pages | sort: 'order' | where: 'type', 'page') %}
+                    {% for node in orderedPages %}
+                        {% if page.url == node.url %}
+                            <li class="nav-item active">
+                                <a class="nav-link" href="{{ node.url | relative_url  }}" class="active">{{ node.title }}</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ node.url | relative_url  }}">{{ node.title }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

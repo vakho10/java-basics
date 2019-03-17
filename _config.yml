@@ -1,0 +1,16 @@
+# Site settings
+title: Java Basics
+email: vakho10@gmail.com
+github_username:  vakho10
+baseurl: "/java-basics" # the subpath of your site, e.g. /blog
+url: "" # the base hostname & protocol for your site, e.g. http://example.com
+
+# Build settings
+markdown: kramdown
+highlighter: rouge     
+kramdown:
+  syntax_highlighter_opts:
+    block:
+      line_numbers: true
+
+excerpt_separator: <!--more-->
