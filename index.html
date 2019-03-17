@@ -5,9 +5,10 @@ layout: default
 title: მთავარი გვერდი
 ---
 <section>
-  {% for post in site.posts %}
+  {% assign sortedPosts = (site.posts | sort: 'date') | reverse %}
+  {% for post in sortedPosts %}
   <article>
-    <a href='{{ post.url | relative_url }}'>{{ post.title }}</a>
+    <a href='{{ post.url | relative_url }}'>{{ post.title }}</a> {{ post.date | date_to_long_string }}
     {{ post.excerpt }}
   </article>
   {% endfor %}
