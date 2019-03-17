@@ -13,6 +13,10 @@
     margin: 0;
 }
 
+.max-width {
+    max-width: 970px;
+}
+
 body {
     font-family: "BPG Ingiri Arial", sans-serif;
 }
