@@ -12,3 +12,11 @@
 .card-body > .highlight {
     margin: 0;
 }
+
+body {
+    font-family: "BPG Ingiri Arial", sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, .nav-item {
+    font-family: "BPG Nino Medium Caps", sans-serif;
+}
