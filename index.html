@@ -1,15 +1,21 @@
---- 
+---
 order: 1
 type: page
-layout: default 
+layout: default
 title: მთავარი გვერდი
 ---
 <section>
-  {% assign sortedPosts = (site.posts | sort: 'date') | reverse %}
+  {% assign sortedPosts = site.posts | sort: 'date' | reverse %}
   {% for post in sortedPosts %}
-  <article>
-    <a href='{{ post.url | relative_url }}'>{{ post.title }}</a> {{ post.date | date_to_long_string }}
-    {{ post.excerpt }}
+  <article class="card">
+    <div class="card-header">
+      <span class="float-left">{{ post.title }}</span>
+      <span class="float-right">{{ post.date | date_to_long_string }}</span>
+    </div>
+    <div class="card-body">
+      <p class="card-text">{{ post.excerpt }}</p>
+      <a href='{{ post.url | relative_url }}' class="card-link">მეტის ნახვა</a>
+    </div>
   </article>
   {% endfor %}
 </section>

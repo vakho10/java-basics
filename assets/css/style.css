@@ -8,9 +8,16 @@
 }
 
 /* Remove margin if code is the only element in card */
-.card > .highlight,
-.card-body > .highlight {
+
+.card>.highlight,
+.card-body>.highlight {
     margin: 0;
+}
+
+/* Remove margin-bottom if code is in callout element */
+
+.bd-callout > .highlight {
+    margin-bottom: 0;
 }
 
 .max-width {
@@ -21,6 +28,12 @@ body {
     font-family: "BPG Ingiri Arial", sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6, .nav-item {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.nav-item {
     font-family: "BPG Nino Medium Caps", sans-serif;
 }

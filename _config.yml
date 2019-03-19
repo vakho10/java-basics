@@ -1,6 +1,7 @@
 # Site settings
 title: Java Basics
 email: vakho10@gmail.com
+github_url: https://github.com/vakho10/java-basics
 github_username:  vakho10
 baseurl: "/java-basics" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
