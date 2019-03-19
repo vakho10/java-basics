@@ -14,11 +14,11 @@ categories: lesson
 
 <h2>შესავალი</h2>
 <p>Java (რომელსაც მომავალში მოვიხსენიებთ ქართულად, როგორც "ჯავას") არის ერთ-ერთი გავრცელებული და პოპულარული
-  პროგრამირების ენა. იგი სინტაქსით ჰგავს C++-სა და C#-ს. ეს სამივე ერთ ოჯახს მიეკუთვნება, რომლებსაც ობიექტზე (ან
-  ობიექტებზე) ორიენტირებულ ენებს ეძახიან. ასეთი ენების იდეა მარტივია - პროგრამაში ვიყენებთ
-  მხოლოდ (ან ჭარბად) ობიექტებს.</p>
-<p>ჯავა არის მძიმედ ობიექტზე ორიენტირებული ენა, რაც იმას ნიშნავს რომ <u>ჯავაში ყველაფერი ობიექტია</u>. რათქმაუნდა, გვაქვს პრიმიტიული
-  ტიპები, ოპერატორები, გასაღები სიტყვები (keywords), მაგრამ ყველგან ვიყენებთ ობიექტებს.</p>
+  პროგრამირების ენა. იგი სინტაქსით ჰგავს C++-სა და C#-ს.</p>
+<p>ეს სამივე ერთ ოჯახს მიეკუთვნება, რომლებსაც ობიექტზე (ან
+  ობიექტებზე) ორიენტირებულ ენებს ეძახიან. ასეთი ენების იდეა მარტივია - <mark>პროგრამაში ვიყენებთ ობიექტებს.</mark></p>
+<p>ჯავა არის მძიმედ ობიექტზე ორიენტირებული ენა, რაც იმას ნიშნავს რომ <u>ჯავაში ყველაფერი ობიექტია</u>. რათქმაუნდა,
+  გვაქვს პრიმიტიული ტიპები, ოპერატორები, გასაღები სიტყვები (keywords), მაგრამ ყველგან ვიყენებთ ობიექტებს.</p>
 <p>მაგალითად, შეხედეთ შემდეგ კოდს, რომელიც ბეჭდავს <code>Hello, world!</code>-ს კონსოლში:</p>
 {% highlight java  %}
 public class HelloWorld
@@ -31,51 +31,35 @@ public class HelloWorld
 <p>ამ კოდში დიდი ყურადღება არ გაამახვილოთ გასაღებ სიტყვებზე. უბრალოდ ნახეთ, რომ <code>Hello, world!</code>
   შეტყობინების გამოსატანად დაგვჭირდა ობიექტის განსაზღვრა.</p>
 
+<h2>წარმოშობა</h2>
+<p>ჯავას შექმნა კანადელმა <a href="https://en.wikipedia.org/wiki/James_Gosling">ჯეიმს გოსლინგმა</a> 1995 წელს <a href="https://en.wikipedia.org/wiki/Sun_Microsystems">სანს მიკროსისტემში</a> (Sun Microsystems).</p>
+<p>ჯავას მთავარი მოტივი იყო ყოფილიყო პლატფორმისგან დამოუკიდებელი (აგნოსტური), რაც ნიშნავს შემდეგს:</p>
+<p class="text-center"><mark>დააკომპილირე ერთ პლატფორმაზე და გაუშვი სადაც გინდა (write once, run anywhere).</mark></p>
+
 <h2>არქიტექტურა</h2>
-<p>ჯავა არის ინტერპრეტირებადი ენა</p>
-Jekyll also offers powerful support for code snippets:
+<p>ჯავას მულტიპლატფორმულობას უზრუნველყოფს JVM (Java Virtual Machine), რომელიც, მარტივად რომ ვთქვათ, არის ერთგვარი <u>თარჯიმანი აპლიკაცია</u>, რომელიც დაკომპილირებულ ჯავას კოდის ინსტრუქციებს უთარგმნის ოპერაციულ სისტემას.</p>
+<p>დაკომპილირებულ ჯავას კოდს ეძახიან "ბაიტკოდს" (bytecode) და იგი მსგავსია ასემბლის ინსტრუქციებისა. ინტერპრეტატორი (ანუ JVM პროგრამა) კითხულობს ჯავას ბაიტკოდს და უშვებს მას სამიზნე ოპერაციულ სისტემაზე.</p>
+<p>პროცესი შეგვიძლია ვიზუალურადაც აღვწეროთ:</p>
+<img class="img-thumbnail" src="https://aboullaite.me/content/images/2017/08/jit.png" />
+<p>მოდით გავეცნოთ შემდეგ დიდ სამეულს: JVM, JRE, JDK. აქედან, JVM უკვე ვახსენეთ, მაგრამ მაინც:</p>
+<ul>
+  <li>JVM - ჯავას ვირტუალური მანქანა (თარჯიმანი პროგრამა), რომელიც კოდს უშვებს ოპერაციულ სისტემაში.</li>
+  <li>JRE (Java Runtime Environment) = <mark>JVM + ჯავას ბიბლიოთეკის ფაილები</mark>. <u>გარემო</u>, რომელშიც ჯავას კოდი ეშვება.</li>
+  <li>JDK (Java Development Kit) = <mark>JRE + ხელსაწყოები</mark> (მაგალითად, როგორიცაა ჯავას კომპილერი: javac და ა. შ.)</li>
+</ul>
+<p>აქედან აზრი, დაკომპილირებული ჯავას <u>ბაიტკოდის გასაშვებად</u> საკმარისია ოპერაციულ სისტემაში გვეყენოს JRE.</p>
+<p>თუ გვსურს ჯავაზე კოდის წერა, დაკომპილირება და გაშვება, მაშინ სისტემაზე უნდა გვეყენოს JDK.</p>
 
-{% highlight ruby %}
-def print_hi(name)
-  puts "Hi, #{name}"
-end
-print_hi('Tom')
-#=> prints 'Hi, Tom' to STDOUT.
-{% endhighlight %}
+<h2>დეველოპმენტის გარემოები</h2>
+<p>ჩვენ შეგვიძლია ჯავას კოდის დაწერა, დაკომპილირება და გაშვება ხელით, notepad-ის ან notepad++-ის (ან რომელიმე
+  სხვა ტექსტური რედაქოტრის) გამოყენებით, მაგრამ როგორც C++-ისთვის არსებობს Visual Studio-ს IDE (Integrated Development
+Environment), ასევე, ჯავასთვისაც არის ბევრი მოქნილი და საყვარელი გარემები კოდის საწერად.</p>
+<p>ტოპ 3 ყველაზე ცნობილი გარემოა:
+  <a href="https://www.jetbrains.com/idea/">IntelliJ IDEA</a>, <a href="https://www.eclipse.org/ide/">Eclipse IDE</a>
+  და <a href="https://netbeans.org/">Netbeans</a>.</p>
+<p>თუ რომელ გარემოში დაწერთ ჯავას კოდს ეს თქვენზეა დამოკიდებული, მაგრამ ჩამოთვლილი სამეული პოპულარობის მიხედვით
+  დავალაგე. ყველაზე პოპულარული IntelliJ არის. იგი ფასიანია, აქვს უფასო სტუდენტური და უფასო Community ვერსია. Community
+  ვერსია საკმარისია ჩვენი საბაზისო კურსისთვის.</p>
 
-{% highlight java  %}
-/* HelloWorld.java
- */
-
-public class HelloWorld
-{
-	public static void main(String[] args) {
-		System.out.println("Hello World!");
-	}
-}
-{% endhighlight %}
-
-{% highlight html  %}
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
-    <title>Hello, world!</title>
-  </head>
-  <body>
-    <h1>Hello, world!</h1>
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-  </body>
-</html>
-{% endhighlight %}
+<h2>თავდაპირველი წესები/შეთანხმებები</h2>
+<p>თავდაპირველად, მოდით გავითვალისწინოთ...</p>
