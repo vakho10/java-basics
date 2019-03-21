@@ -156,3 +156,45 @@ int[][] matrix3 = { { 0, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 }, };
 {% endhighlight %}
 <p>რადგანაც მასივი ობიექტია, მას აქვს ველი სახელად length, რომელიც შეიცავს მის ზომას. გვახსოვდეს, რომ მასივის ზომა კონსტანტურია და მისი ცვლილება პროგრამის მსვლელობისას შეუძლებელია.</p>
 <p>მასივის ერთ ხაზში ინიციალიზაცია და მინიჭება შესაძლებელია ტიპის მითითების გარეშეც. კომპილერი (პროგრამა, რომელიც კოდს აკომპილირებს) ჭკვიანია და მიმთითებლის ტიპის მიხედვით იცის რა ტიპის მასივიც იქმნება.</p>
+<p>მასივის ერთ ხაზში ინიციალიზაციისას შეგვიძლია ჩამონათვალის ბოლოს გამოვიყენოთ ','. </p>
+
+<h2>სადემონსტრაციო მაგალითი</h2>
+<p>მოდით გამოვიყენოთ ამ თავში ნასწავლი ინფორმაცია და დავწეროთ მარტივი მაგალითი. დავწეროთ პროგრამა, რომელიც Bubble Sort ალგორითმით დაალაგებს ელემენტებს ზრდადობით:</p>
+{% highlight java  %}
+package ge.tsu;
+
+public class BubbleSort {
+
+	public static void main(String[] args) {
+		int[] nums = {1, -2, 12, 56, 3, 2};
+		printArray(nums); 
+		bubbleSort(nums); // Sort array
+		printArray(nums); // Print sorted
+	}
+	
+	static void bubbleSort(int[] nums) {
+		for (int i = 0; i < nums.length; i++) {
+			for (int j = i + 1; j < nums.length; j++) {
+				if (nums[j] < nums[i]) {
+					// Swap numbers					
+					int tmpNum = nums[j];
+					nums[j] = nums[i];
+					nums[i] = tmpNum;
+				}
+			}
+		}
+	}
+	
+	static void printArray(int[] nums) {
+		System.out.print("[ ");
+		for (int i = 0; i < nums.length; i++) {
+			System.out.print(nums[i]);
+			if (i != nums.length - 1) {
+				System.out.print(", ");
+			}
+		}
+		System.out.println(" ]");
+	}
+}
+{% endhighlight %}
+<p>P. S. სახლში შეგიძლიათ დაწეროთ იგივე კოდი სხვა სორტირების ალგორითმის გამოყენებით. მაგალითად, Selection Sort ან Insertion Sort.</p>
