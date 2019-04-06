@@ -1,7 +1,7 @@
 ---
 layout: default
 title:  "გაკვეთილი N2"
-date: 2019-03-25 09:00:00 +0400
+date: 2019-03-27 09:00:00 +0400
 categories: lesson
 ---
 
@@ -168,16 +168,138 @@ bigV = Character.toUpperCase(bigV);
 {% endhighlight %}
 
 <h2>ციკლის ოპერატორები</h2>
+<p>ჯავაში გვაქვს შემდეგი ციკლის ოპერატორები: while, do-while, for, enhanced-for (იგივე foreach).</p>
+<p>ყველა ციკლის ოპერატორი თქვენთვის ნაცნობია გარდა ბოლოსი: გაფართოებული for ციკლისა.</p>
+<p>გაფართოებული for ციკლს ეძახიან foreach-საც. ეს ოპერატორი გარბის მასივის ან კოლექციის ყველა ელემენტს დაწყებული პირველი ელემენტიდან - დამთავრებული ბოლოთი.</p>
+<p>მოვიყვანოთ მასივის foreach ციკლით გარბენის მაგალითი:</p>
+{% highlight java %}
+for (String str : strings) {
+   System.out.println("Str: " + str);
+}
+{% endhighlight %}
+<p><code>:</code> - არის გამყოფი სიმბოლო. მარცხენა მხარეს იწერება იტერაციის ერთ ბიჯში რა ტიპის და რა სახელის იქნება ელემენტი. მარჯვენა მხარეს იწერება მასივი ან კონტეინერი (ან იტერირებადი ტიპი. ამაზე მომავალში :)).</p>
 <p>ორმაგი ციკლიდან იარლიყით გამოსვლა...</p>
 
 <h2>შედარების ოპერატორები</h2>
-<p></p>
+<p><code>if / else</code> ოპერატორები ყველასათვის ცნობილია. მათი პირობა უნდა იყოს აუცილებლად ბულეან ტიპის.</p>
+<p>მაგალითად:</p>
+{% highlight java %}
+if (!someBooleanValue) {
+   // ...
+} else if (otherStuffBoolean) {
+   // ...
+} else {
+   // ...
+}
+{% endhighlight %}
+<p>პირობა შეიძლება იყოს კომპლექსური (შედგებოდეს ბევრი ლოგიკური პირობისგან).</p>
+<p>მაგალითად:</p>
+{% highlight java %}
+if (exp1 && exp2) {
+   // ...
+} else if (exp1 || exp2) {
+   // ...
+} else {
+   // ...
+}
+{% endhighlight %}
+<p><code>&&</code> და <code>||</code> ოპერატორებს ეძახიან მოკლე-ჩართვიანებს (short-circuit). განსხვავება <code>&</code> და <code>|</code> ოპერატორებს შორის არის მარტივი: მოკლე-ჩართვიანი ოპერატორები <u>ოპტიმალურად მუშაობენ</u>.</p>
+<p>მაგალითად, <code>&&</code> ("და") ოპერაციის დროს თუ პირველი მონაწილე არის false, მაშინ მეორე მონაწილის შესრულება არ არის საჭირო. იგივეა, "ან" ოპერატორის შემთხვევაში. თუ, "ან" ოპერაციის დროს პირველი მონაწილე ჭეშმარიტია, მაშინ მეორის შესრულება არ არის აუცილებელი.</p>
+<p>ამის მაგალითი შეგვიძლია ვიხილოთ შემდეგ კოდში:</p>
+{% highlight java %}
+// ...
+
+public static void main(String args[]) {
+   if (expFalse() && expTrue()) {
+      // ^ შეასრულებს მარტო expFalse-ს
+   }
+   if (expTrue() || expFalse()) {
+      // ^ შეასრულებს მარტო expTrue-ს
+   }
+}
+
+static boolean expFalse() { 
+   System.out.println("expFalse");
+   return false; 
+}
+
+static boolean expTrue() { 
+   System.out.println("expTrue");
+   return true; 
+}
+
+// ...
+{% endhighlight %}
 
 <h2>Switch ოპერატორი</h2>
-<p>რისი დაწერა შეიძლება case-ში...</p>
+<p>switch ოპერატორი არის "if/else"-ების ნაკრების გამარტივება.</p>
+<p>switch-ის შესახებ ჯავაში უნდა ვიცოდეთ შემდეგი წესები:</p>
+<ul>
+   <li>switch შეგვიძლია განვახორციელოთ მხოლოდ შემდეგ ტიპებზე: byte, short, char, int ტიპებზე (და მათი ობიექტურიც, რადგანაც ისინი Unboxing-ით ისევ პრიმიტივებზე დავა), enum-ებსა და String-ებზე.</li>
+   <li>ყოველი case-ის მნიშვნელობა უნდა იყოს კომპილაციის დროის (compile-time) კონსტანტა: literals, enum-ის კონსტანტა და final (კონსტანტური) ცვლადები.</li>
+</ul>
+<p>მაგალითად: </p>
+{% highlight java %}
+switch (str) {
+   case "A": 
+      System.out.println("A case.");
+      break;
+   case "B": 
+   case "C": 
+      System.out.println("B, C case.");
+      break;
+   default: 
+      System.out.println("Not A, B, or C case!");
+}
+{% endhighlight %}
+<p>პ. ს. default შეგვიძლია დავწეროთ სადაც გვსურს.</p>
 
 <h2>String კლასი და მისი წარმოდგენა</h2>
-<p>String pool...</p>
+<p>String ჯავაში არის ობიექტური ტიპი (კლასი). რადგანაც იგი ობიექტია, მისი შექმნა შეგვიძლია <code>new</code> გასაღები სიტყვით:</p>
+{% highlight java %}
+String str = new String("Hello, world!");
+{% endhighlight %}
+<p>თუმცა, იმის გამო რომ სტრინგი არის გამორჩეული ტიპი, მისი შექმნა შეგვიძლია პირდაპირ (new-ს დაწერის გარეშე):</p>
+{% highlight java %}
+String str = "Hello, world!";
+System.out.println("Hello, world!"); // ან პირდაპირ
+{% endhighlight %}
+<p>ჯავაში სტრინგის ასეთი "პირდაპირი" ჩანაწერები (string literals) ინახება ცალკე მეხსიერებაში, რომელსაც ჰქვია: String Pool.</p>
+<p>ამ "სტრიქონების აუზი" შენახული სტრიქონები შემდგომ მეორეჯერ გამოიყენება. მეორეჯერ გამოყენება ზოგავს მეხსიერებას.
+   თუმცა, იმისათვის რომ ცვლილებამ სხვა ცვლადის შედეგი არ შეცვალოს, სტრიქონები არიან არამუტირებადი (immutable). სტრიქონის
+   ცვლილება ყოველთვის ქმნის ახალ სტრიქონს სტირონების აუზი.</p>
+<p>მაგალითად:</p>
+{% highlight java %}
+String str1 = "Java";
+String str2 = "Java";
+String str3 = "java"; // Lowercase is different!
+System.out.println(str1 == str2); // => true
+System.out.println(str2 == str3); // => false
+
+String str2 += "xishvili";
+System.out.println(str1 == str2); // => false
+{% endhighlight %}
+<p><code>new</code>-თი შექმნილი სტრიქონი არ ინახება სტრიქონების აუზში. თუ გვინდა მისი სტრიქონების აუზში შენახვა, მაშინ შეგვიძლია გამოვიყენოთ სტრიქონის intern() მეთოდი:</p>
+{% highlight java %}
+String str = "Hello, world!";
+String str2 = new String("Hello, world!");
+System.out.println(str == str2); // => false
+
+str2.intern();
+System.out.println(str == str2); // => true
+{% endhighlight %}
+<p>პ. ს. არ შექმნათ დიდი რაოდენობის სხვადასხვა სტრიქონები, რომ არ გაავსოთ სტრიქონების აუზი :) გამოიყენეთ StringBuilder (ან StringBuffer).</p>
 
 <h2>StringBuilder (და StringBuffer) კლასები</h2>
-<p>ძირითადი განსხვავება და როდის ვიყენებთ...</p>
+<p>ამ დამხმარე კლასს ვიყენებთ მაშინ, როდესაც ვასრულებთ რაიმე კომპლექსურ ტრანსფორმაციას ან დიდი რაოდენობის ოპერაციებს სტრიქონზე.</p>
+<p>StringBuffer არის იგივე StringBuilder, მაგრამ მრავალნაკადიანი პროგრამისთვის. ამჯერად, რადგანაც ჩვენ არ ვქმნით და არ ვიყენებთ ნაკადებს, გამოვიყენოთ StringBuilder კლასი.</p>
+<p>StringBuilder-ით გაკეთებული სტრიქონის აღება შეგვიძლია StringBuilder-ის toString() მეთოდით.</p>
+<p>მოვიყვანოთ მაგალითი ფიფქების გენერირების: </p>
+{% highlight java %}
+StringBuilder sb = new StringBuilder();
+for (int i = 1; i < numberOfFifqs; i++) {
+   sb.append("*");
+}
+String result = sb.toString();
+System.out.println(result);
+{% endhighlight %}
