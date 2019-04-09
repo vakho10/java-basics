@@ -1,22 +1,297 @@
 ---
 layout: default
-title:  "გაკვეთილი N3"
+title: "გაკვეთილი N3"
 date: 2019-04-03 09:00:00 +0400
 categories: lesson
 ---
 
 <h1 class="text-center">კლასების მიმოხილვა, ნაგვის შემგროვებელი და finalize მეთოდი</h1>
-<p>კლასები არის ობიექტზე ორიენტირებული ენების ფუძე და საყრდენი. ჯავაში კლასების განსაზღვრა და მათი გამოყენება ინტუიტიური და მარტივია. დაკარგული კლასები, რომლებსაც ვერ გამოვიყენებთ პროგრამის რომელიმე მომენტიდან დაწყებული ექვემდებარებიან წაშლას (განადგურებას) ნაგვის შემგროვებელის მიერ. სანამ ასეთი კლასების განადგურება მოხდება პროგრამისტს შეუძლია განსაზღვროს საბოლოო შესასრულებელი ოპერაციები finalize მეთოდში.</p>		
+<p>კლასები არის ობიექტზე ორიენტირებული ენების ფუძე და საყრდენი. ჯავაში კლასების განსაზღვრა და მათი გამოყენება ინტუიტიური
+    და მარტივია. დაკარგული კლასები, რომლებსაც ვერ გამოვიყენებთ პროგრამის რომელიმე მომენტიდან დაწყებული ექვემდებარებიან
+    წაშლას (განადგურებას) ნაგვის შემგროვებელის მიერ. სანამ ასეთი კლასების განადგურება მოხდება პროგრამისტს შეუძლია
+    განსაზღვროს საბოლოო შესასრულებელი ოპერაციები finalize მეთოდში.</p>
 
 <!--more-->
-
 <hr />
 
 <h2>კლასების მიმოხილვა</h2>
-<p>ჯავას კლასები, კონსტრუქტორი, this გასაღები სიტყვა და ა. შ.</p>
+<p>ჯავას კლასები იწერება <code>class</code> სიტყვის გამოყენებით. კლასი ჯავაში შედგება სამი რაღაცისგან: კონსტრუქოტისგან,
+    ველებისა და მეთოდებისგან. ველები იგივეა რაც ცვლადები კლასისთვის. მეთოდები კი იგივეა რაც ფუნქციები. განსხვავება არის
+    მათ თვისებებსა და, რათქმაუნდა, სახელებში. კონსტრუქტორი არის კლასის ის მეთოდი, რომელიც გამოიძახება კლასის ტიპის
+    ობიექტის შექმნის მომენტში (ძირითადად გამოიყენება კლასის ველებისთვის მნიშვნელობების მისანიჭებლად).</p>
+<p>ვნახოთ კლასის მარტივი მაგალითი ამ სამი კომპონენტის გამოყენებით:</p>
+{% highlight java %}
+package ge.example;
+
+public class Person {
+
+    // Fields
+    public String firstName;
+    public String lastName;
+    public int age;
+
+    // Constructors
+    public Person() {
+        // Empty constructor
+    }
+
+    public Person(String firstName, String lastName, int age) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+    }
+
+    // Methods
+    public void print() {
+        System.out.println("First name: " + firstName);
+        System.out.println("Last name: " + lastName);
+        System.out.println("Age: " + age);
+    }
+
+    public static void main(String[] args) {
+
+        // Call constructor with parameters (like calling function)...
+        Person p = new Person("John", "Brown", 35); 
+
+        // Call method...
+        p.print(); 
+    }
+}
+{% endhighlight %}
+<p>მაგალითში ვიყენებთ წვდომის მოდიფიკატორს (access modifier) <code>public</code>-ს. ჯავაში არის 4 ტიპის წვდომის
+    მოდიფიკატორი, რომლებსაც ჩვენ ამ გაკვეთილის ბოლოს განვიხილავთ, და მათი გამოყენებაც შეზღუდულ ადგილებში შეგვიძლია.
+    ამჯერად გეტყვით, რომ <code>public</code> მოდიფიკატორი ნიშნავს, რომ მოცემულ ველზე (ან იმ ელემენტზე რასაც იგი უწერია)
+    წვდომა შეუძლია ყველას, ყველგან. ამაზე დეტალურად მოგივანებით.</p>
+<p>კლასში კლასის ელემენტების (ველების, მეთოდების და ა.შ.) განლაგებას არ აქვს მნიშვნელობა. უბრალოდ, შეთანხმებულია რომ ჯერ
+    ვწერთ ველებს, შემდგომ კონსტრუქტორებს და ბოლოს მეთოდებს. </p>
+<p>კონსტრუქტორში გამოყენებული <code>this</code> სიტყვა არის მიმთითებელი (reference) იმ კლასის ობიექტზე, რომელშიც ეს
+    <code>this</code></p>
+<p>სიტყვა წერია და რომელიც ჯერ არ შექმნილა. <code>this</code> ძირითადად გამოიყენება იმ შემთხვევაში,
+    როდესაც ხდება კლასის ველის სახელის დაჩრდილვა (shadowing). დაჩრდილვა ნიშნავს, რომ კოდის რომელიმე ფრაგმენტიდან ახალი
+    ცვლადი, რომელსაც იგივე სახელი აქვს, ჩრდილავს ველის სახელს და ველის სახელით უკვე ამ ახალ ცვლადს მივმართავთ და არა კლასის
+    ველს.</p>
+<p>დაჩრდილვის მაგალითია:</p>
+{% highlight java %}
+public class SomeClass {
+
+    // Field definition
+    public String name = "some name";
+
+    // Parameter shadowing
+    public void foo(String name) { // parameters shadows field    
+        System.out.println(name); // Bad, :( calls method's parameter
+        System.out.println(this.name); // Good, :) calls field
+    }
+
+    // Local variable shadowing
+    public void bar() {
+        System.out.println(name); // Calls field
+        String name = "asdf";
+        System.out.println(name); // Bad, :( calls local variable
+        System.out.println(this.name); // Good, :) calls field
+    }
+}
+{% endhighlight %}
+<p>გაჩუმებით (by default), თუ კლასს კონსტრუქტორს არ დავუწერთ კომპილერი უპარამეტრო კონსტრუქტორს ავტომატურად ქმნის (იმ
+    წვდომის მოდიფიკატორით, რაც კლასს უწერია). თუმცა, თუ ჩვენ პარამეტრიანს დავწერთ, მაშინ კონსტრუქტორი არაფერს არ შექმნის
+    და ჩვენ უპარამეტრო თუ გვჭირდება, მაშინ მისი დაწერა მოგვიწევს ჩვენით, რაც მაგალითში გავაკეთეთ.</p>
+<p>გაჩუმებით შექმნილი უპარამეტრო კონსტრუქტორის მაგალითი:</p>
+{% highlight java %}
+public class Burger {
+
+    // No constructor right? 
+    // but compiler writes one for us.
+
+    public static void main(String arg[]) {
+        Burger burger = new Burger(); // That's why this is possible!
+    }
+}
+{% endhighlight %}
+<p>ჯავაში <code>static</code> სიტყვას, C++-ისგან განსხვავებით, სხვა გამოყენება აქვს. ჯავაში <code>static</code> სიტყვა
+    ეწერებათ მხოლოდ კლასის ველებსა და მეთოდებს (და არა კონსტრუქტორებს).</p>
+<p>სტატიკურობა, მარტივად რომ გავიგოთ, ნიშნავს მარად არსებულობას. ჩვენ ვიცით რომ კლასის ველებისა და მეთოდების
+    არსებობისთვის (რომ შევძლოთ მათი გამოყენება) უნდა არსებობდეს ამ კლასის ტიპის რაიმე ობიექტი. თუ ობიექტი არ გვაქვს
+    ვერაფერს გამოვიყენებთ. სტატიკურის შემთხვევაში კლასის ობიექტის არსებობა არაა აუცილებელი. სტატიკური ველები და მეთოდები
+    იქმნება ერთხელ მაშინ, როდესაც კომპილერი ჯავაში ჩატვირთავს ამ კლასს. კლასის ჩატვირთვა აუცილებლად მოხდება მაშინ,
+    როდესაც კომპილერი პირველად ნახავს უცხო კლასს, რომელიც ჯერ არ ჩაუტვირთავს.</p>
+<p>მოვიყვანოთ სტატიკური ველის მაგალითი:</p>
+{% highlight java %}
+public class A {
+
+    public static String field = "asdf";
+    static public String field2 = "qwerty"; // Can swap public and static keywords
+
+    public static void main(String arg[]) {
+
+        // No need to create class A to access static fields (but it still is valid)
+        System.out.println(field); // Call by name because it is visible from here
+        System.out.println(A.field); // Call using class's name (if call is made from other place)
+
+        A a = new A();
+        System.out.println(a.field); // Create instance and call it (ugly, but valid call)
+    }
+}
+{% endhighlight %}
+<p>სტატიკურ ველებსა და მეთოდებს აქვთ თავისი წესები:</p>
+<ul>
+    <li>სტატიკურის გამოყენება (გამოძახება) შეიძლება საიდანაც გინდათ. იგი მარად არსებულია და პრობლემა არაა საიდან გამოიძახებთ: სტატიკური მეთოდიდან თუ არა-სტატიკურიდან.</li>
+    <li>სტატიკური მეთოდი არა-სტატიკურ მეთოდებსა და ველებს პირდაპირ ვერ გამოიძახებს. მხოლოდ, იმ შემთხვევაში თუ ჯერ ობიექტს შევქმნით და მასზე გამოივიძახებთ.</li>
+</ul>
+<p>მაგალითად: </p>
+{% highlight java %}
+public class A {
+
+    public static String field = "asdf";
+    public String field2 = "qwerty"; // Non-static field
+
+    public void foo() {
+        // Valid calls to static from non-static method
+        bar(); 
+        System.out.println(field2 + field); 
+    }
+
+    public static void bar() {
+        // Can't call non-static from static directly!
+        foo(); 
+        System.out.println(field2 + field); 
+    }
+}
+{% endhighlight %}
+<p>ჯავაში კონსტრუქტორში კომპილერი თავში ავტომატურად წერს მშობელი კლასის უპარამეტრო კონსტრუქტორის გამოძახებას:
+    <code>super();</code>. ჩვენ არ გვიწევს ამის წერა, მაგრამ უნდა ვიცოდეთ, რომ იგი საბოლოოდ იწერება კონსტრუქტორის თავში.
+    თუ გვსურს სხვა კონსტრუქტორის გამოძახება ერთი კონსტრუქტორიდან, მაშინ უნდა გამოვიყენოთ <code>this();</code>
+    გამოძახება. როგორც ვთქვით, <code>this</code> მიუთითებს არსებულ კლასზე და ფრჩხილები არის კონსტრუქტორის გამოძახება.
+</p>
+<p>მაგალითად:</p>
+{% highlight java %}
+public class Book {
+
+    String title, description;
+
+    public Book() {
+        super(); // Not necessary, but we can write it 
+        title = "No Title";
+        description = "No description.";
+    }
+
+    public Book(String title) {
+        this(); // Call no-parameter constructor
+        this.title = title;
+    }
+
+    public Book(String title, String description) {
+        this(title); // Call title constructor
+        this.description = description;
+    }
+}
+{% endhighlight %}
+<p>გაითვალისწინეთ, რომ this(..) და super(..) გამოძახებები უნდა იყოს კონსტრუქტორის თავში დაწერილი და მხოლოდ ერთ-ერთი
+    მათგანი შეგიძლიათ გამოიყენოთ ერთხელ. თუ ეს წესები დაირღვევა, მაშინ კომპილერი შეცდომას ამოგიგდებთ და კოდი არ
+    დაკომპილირდება.</p>
+<p>ძირითადად, კონსტრუქტორში ასეთი გამოძახებები გამოიყენება იმისათვის, რომ არ გავიმეოროთ ველების მინიჭების კოდი
+    კონსტრუქტორებში და კოდი იყოს უფრო კომპაქტური.</p>
+<p>ახლა განვიხილოთ ობიექტის შექმნისას კოდის შესრულების თანმიმდევრობა, რაც ინტუიტიური და მარტივია. ასევე განვიხილოთ ინიციალიზაციის ბლოკები კლასში.</p>
+<p>ინიციალიზაციის ბლოკი არის უბრალო ფიგურული ფრჩხილების <code>{}</code> მქონე ბლოკი დაწერილი კლაში, რომელიც ძირითადად
+    გამოიყენება კლასის ველების ინიციალიზაციისთვის. ინიციალიზაციის ბლოკები შეიძლება იყოს სტატიკურიც და იგივე სტატიკურობის წესებს ემორჩილებიან.</p>
+<p>მაგალითად:</p>
+{% highlight java %}
+public class City {
+
+    String name;
+    long population;
+    static int INSTANCE_COUNT;
+
+    {
+        System.out.println("Non-static block 1");
+        name = "Default name";
+        population = 100;
+    }
+
+    {
+        System.out.println("Non-static block 2");
+    }
+
+    static {
+        System.out.println("Static block 1");
+        INSTANCE_COUNT = 0;
+    }
+
+    static {
+        System.out.println("Static block 2");
+    }
+
+    public City() {
+        System.out.println("Constructor");
+    }
+
+    public static void main(String[] args) {
+        new City();
+    }
+    
+}
+{% endhighlight %}
+<p>მაგალითში თანმიმდევრობა არის შემდეგნაირი: კომპილერი ტვირთავს კლასს, ამიტომაც ჯერ სტატიკურები შესრულდება
+    (მიმდევრობით), შემდეგ ინიციალიზაციის ბლოკები და ბოლოდ კონსტრუქტორი.</p>
+<p>მივიღებთ შემდეგ შედეგს:</p>
+<div class="card mb-3">
+    <div class="card-body">
+        Static block 1<br />
+        Static block 2<br />
+        Non-static block 1<br />
+        Non-static block 2<br />
+        Constructor
+    </div>
+</div>
 
 <h2>ნაგვის შემგროვებელი</h2>
-<p>იდეა, გამოძახების მომენტები</p>
+<p>C++-ში და მსგავს ენებში შექმნილი ობიექტების (და გამოყოფილი მეხსიერების) განადგურება, წაშლა პროგრამისტის მოვალეობაა.
+    ჯავაში ეს ასე არაა. ჯავაში გვაქვს ე.წ. "ნაგვის შემგროვებელი" (Garbage Collector), რომელიც, მარტივად რომ ვთქვათ, არის ფონური პროგრამა,
+    რომელიც უყურებს ჯავას პროგრამას და ამოწმებს თუ არის ისეთი ობიექტი მეხსიერებაში, რომელზეც მიმთითებელი აღარ არსებობს
+    და შლის ეგეთ დავიწყებულ ობიექტებს. ნაგვის შემგროვებლის გამოძახება შეგვიძლია მოვითხოვოთ კოდის რომელიმე გრაგმენტზე
+    System.gc() სტატიკური მეთოდის გამოძახებით, მაგრამ უნდა ვიცოდეთ, რომ ნაგვის შემგროვებლის მოთხოვნა არ ნიშნავს მის
+    გარანტირებულ გამოძახებას. მოთხოვნამ შეიძლება გამოიძახოს ან არ გამოიძახოს ნაგვის შემგროვებელი. გამოძახება ბევრ ფაქტორზეა
+    და მოკიდებული, რომლებსაც არავინ ითვალისწინებს. უბრალოდ უნდა ვიცოდეთ რომ გამოძახება არ ნიშნავს გაშვებას.</p>
+<p>მაგალითად:</p>
+{% highlight java %}
+public class City {
+
+   public static void main(String[] args) {
+       new City(); // Will be garbage collected
+       City c = new City();
+       c = null; // After this line, c's old referenced object will be garbage collected
+       System.gc(); // Calling GC...
+       // It may cleaned the memory or may not :( we don't know.
+   }
+}
+{% endhighlight %}
 
 <h2>finalize მეთოდი</h2>
-<p>რაში გამოიყენება, მაგალითი...</p>
+<p>თუ მოხდა საოცრება და ნაგვის შემგროვებელი ამუშავდა და წაშალა მივიწყებული ობიექტები პროგრამის მსვლელობისას, მაშინ ჩვენ
+    შეგვიძლია ამ ობიექტს დავუწეროთ მეთოდი, რომელსაც იგი გამოიძახებს განადგურებამდე. ასეთი მეთოდი არის განსაზღვრული
+    ყველას მშობელ Object კლასში და მას ჰქვია: finalize() და გაჩუმებით არის ცალიელი.</p>
+<p>რადგანაც ეს მეთოდი არის მშობელ კლასში, მისი გადაფარვა და ჩვენი იმპლემენტაციის (ჩვენი კოდის) დაწერა შეგვიძლია. მეთოდის გადაფარვაზე ჯერ არ გვილაპარაკია, მაგრამ მომავალში აუცილებლად გავნიხილავთ დეტალურად. ამჯერად, დავიზეპიროთ finalize მეთოდის გადაფარვა როგორ ხდება.</p>
+{% highlight java %}
+public static class City {
+
+    String name;
+    long population;
+
+    public City(String name, long population) {
+        this.name = name;
+        this.population = population;
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        // Do something with name and population before class will be deleted
+        System.out.println("Name was :( " + name);
+        System.out.println("Population was :( " + population);
+    }
+
+    public static void main(String[] args) {
+        new City("Tbilisi", 1_200_000);
+        System.gc(); // finalize may be called :( we don't know...
+    }
+}
+{% endhighlight %}
+<p>დაიმახსოვრეთ, რომ რადგანაც ნაგვის შემგროვებელის გამოძახება არაგარანტირებულია ასევეა finalize მეთოდისაც. ჩვენ არ ვიცით იგი ამუშავდება თუ არა.</p>
