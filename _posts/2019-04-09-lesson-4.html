@@ -15,7 +15,136 @@ categories: lesson
 <hr />
 
 <h2>ჩამოთვლადი ტიპი</h2>
-<p>ენამი და მაგალითი...</p>
+<p>ენამი (enum) არის ენუმერაცია, ჩამონათვალი რაღაცა სახელებისა, მონაცემებისა. იგი გამოიყენება უშუალოდ პროგრამის წერის დროს კოდის გასამარტივებლად.</p>
+<p>მისი მარტივი მაგალითია:</p>
+{% highlight java %}
+public enum Fruit {
+    APPLE, BANANA, ORANGE, COCONUT
+}
+// ... 
+public static void main(String[] args) throws Exception {
+
+    Fruit fruit = Fruit.APPLE;
+    switch (fruit) {
+    case APPLE:
+        System.out.println("Fruit is an apple :)");
+        break;
+    case BANANA:
+        System.out.println("I like bananas a lot :)");
+    }
+}
+{% endhighlight %}
+<p>ჯავაში, როგორც უკვე ბევრჯერ ვთქვით, ყველაფერი ობიექტია. ენამიც არ არის გამონაკლისი და იგი არის ობიექტი. კერძოდ, ჩვენ
+    მიერ დაწერილი (და უკვე არსებული) ენამები არიან მშობელი ენამის შვილები, მაგრამ იგი კოდში არ ჩანს და მისი ცოდნა არც
+    მოგვეთხოვება. მთავარია ვიცოდეთ რა მეთოდები აქვს და რომლებს გამოვიყენებთ ხშირად.</p>
+<p>ენამის პირდაპირი დაბეჭდვის (კონსოლში გამოტანის) დროს დაიბეჭდება მისი სახელი. System.out.println მეთოდს აქვს
+    გადატვირთული მეთოდი, რომელიც იღებს ნებისმიერ ობიექტს და მის toString() მეთოდს იძახებს. აგრეთვე, სტრიქონების
+    კონკატენაცია ობიექტთანაც იძახებს toString() მეთოდს და რადგანაც ენამი ობიექტია, მას აქვს ეს მეთოდი იმპლემენტირებული
+    რომელიც ენამის name() მეთოდს იძახებს და აბრუნებს მის სახელს.</p>
+<p>რადგანაც ენამი ობექტია (ანუ კლასისმაგვარი რამ), ჩვენ შეგვიძლია კლასის მსგავსი პარამეტრები, კონსტრუქტორი და მეთოდები
+    დავწეროთ ენამში <code>;</code> სიმბოლოს დაწერის შემდეგ:</p>
+{% highlight java %}
+public enum Fruit {
+    APPLE(1.2), BANANA(2.3), ORANGE(3.4), COCONUT(4.5);
+
+    private double averageWeight;
+
+    Fruit(double averageWeight) {
+        this.averageWeight = averageWeight;
+    }
+
+    public double getAverageWeight() {
+        return averageWeight;
+    }
+
+    public static void main(String[] args) throws Exception {
+        Fruit fruit = Fruit.APPLE;
+        System.out.println(fruit.getAverageWeight());
+    }
+}
+{% endhighlight %}
+<p>მაგალითში ჩანს რომ ენამი კლასის მსგავსია. <code>;</code>-მდე დაწერილი სახელები სინამდვილეში არის მაგ სახელის მქონე და
+    Fruit ტიპის კონსტანტური ობიექტები ინიციალიზებული მაგ ხაზშივე. ანუ, <code>APPLE</code> არის იგივე რაც ჩანაწერი
+    <code>public static final Fruit APPLE = new Fruit()</code>, მაგრამ ჩვენ ამას ვერ ვხედავთ და არც გვაინტერესებს. უნდა
+    ვიცოდეთ მხოლოდ ის, რომ ენამის ელემენტები არიან კონსტანტური, ინიციალიზებული ელემენტები და სასურველია, რომ მათი ველები
+    არ იცვლებოდეს. ამიტომაც არის რომ დავწერეთ მხოლოდ getter მეთოდი და არა მინიჭების. მინიჭების მეთოდის დაწერა
+    შესაძლებელია, მაგრამ კოდს არასანდოს გახდის. მაგალითად, თუ დავწერდით მინიჭების მეთოდს და ვიღაცა მას გამოიძახებდა
+    კოდის რომელიმე ფრაგმენტში, მაშინ ამ ფრაგმენტის შემდეგ ველის მნიშვნელობა გახდებოდა ახალი და გაგვიფუჭებდა საქმეს.</p>
+<p>ენამის მეთოდების მაგალითი:</p>
+{% highlight java %}
+public enum Fruit {
+    APPLE, BANANA, ORANGE, COCONUT;
+		
+    public static void main(String[] args) throws Exception {
+
+        for (Fruit fruit : Fruit.values()) {
+            System.out.println("Fruit name is " + fruit.name() 
+                + " and its ordinal (index) is " + fruit.ordinal());
+        }
+    }
+}
+{% endhighlight %}
+<p>name() აბრუნებს ენამის სახელს სტრინგად, ordinal() აბრუნებს ენამის ელემენტის ინდექსს. აქ ინდექსი იწყება 0-დან. მისი შეცვლა არ შეგვიძლია და არც არის საჭირო. თუ რამე განსხვავებული ინდექსის მინიჭება მოგვინდება, მაშინ უბრალოდ შემოვიღებთ ახალ ველს და იმას მივანიჭებთ მნიშვნელობებს.</p>
+<p>ასეთი "ობიექტურობის" გამო, ჯავაში ენამები სხვა ენებთან შედარებით უფრო მოქნილია და მეტ შესაძლებლობებს გვაძლევს.</p>
 
 <h2>ჩადგმული კლასები</h2>
-<p>ჩადგმული კლასები და მაგალითი...</p>
+<p>ჩადგმული კლასი (inner class) ჯავაში გულისხმობს კლასში კლასის განსაზღვრებას. კლასში კლასის განსაზღვრა გულისხმობს, რომ ეს კლასი არსებობს გარე კლასის რომელიმე ობიექტთან ერთად.</p>
+<p>მოვიყვანოთ მაგალითი:</p>
+{% highlight java %}
+public class Person {
+		
+    private String fullName;		
+            
+    public Person(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public class Address {
+        
+        private String name;
+
+        public Address(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
+    
+    public static void main(String[] args) {
+        Person person = new Person("John Wick");
+        Person.Address address = person.new Address("Detroit Ave. N1");
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+}
+{% endhighlight %}
+<p>აქ ბევრი რამ წერია, მაგრამ ყურადღება მიაქციეთ Address შიდა კლასს და მთავარ მეთოდში მის შექმნის სიტაქსს. ვიცით რომ
+    ობიექტი იქნება new გასაღები სიტყვით, მაგრამ რადგანაც შიდა კლასი გარე კლასის ობიექტის გარეშე ვერ იარსებებს, მისი
+    შექმნა ხდება გარე კლასის მიმთითებლის გამოყენებით, <code>person.new Address(...)</code> სინტაქსით. ასევე, შიდა კლასის
+    მიმთითებელი იწერება გარე კლასის პრეფიქსით. შიდა კლასი ხედავს გარე კლასის ყველაფერს (დახურულსა და ღიას). თუ გარე კლასის
+    ველის ან მეთოდის სახელი ემთხვევა შიდა კლასისას და შიდა კლასს სურს გარე კლასის ველს მიწვდეს, მაშინ შეგვიძლია
+    გამოვიყენოთ გარე კლასის ტიპის this ოპერატორი შემდეგნაირად: <code>Person.this.name</code>.</p>
+<p>თუ შიდა კლასს გავხდით სტატიკურს, მაშინ, სტატიკურობის წესიდან გამომდინარე, ამ შიდა კლასის შექმნას შევძლებთ გარე კლასის ობიექტის გარეშე, პირდაპირ:</p>
+{% highlight java %}
+public class Person {
+		
+    public static class Address {
+    }
+    
+    public static void main(String[] args) {
+        Person.Address address = new Person.Address("Detroit Ave. N1");
+    }
+}
+{% endhighlight %}
